@@ -37,9 +37,11 @@
             android:textAllCaps="false" />
 
         <EditText
+            android:id="@+id/userNameET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp" />
+            android:layout_marginHorizontal="20dp"
+            android:maxLength="20"/>
 
 
         <TextView
@@ -48,18 +50,23 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:text="Mobile Number"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:maxLines="1"/>
 
         <EditText
+            android:id="@+id/mobileNumET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp" />
+            android:layout_marginHorizontal="20dp"
+            android:inputType="phone"
+            android:maxLength="10"/>
 
 
     </LinearLayout>
 
 
     <Button
+        android:id="@+id/loginBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login"
