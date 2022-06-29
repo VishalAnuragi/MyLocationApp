@@ -3,7 +3,6 @@ package com.example.mylocationapp
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -11,10 +10,9 @@ import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.*
-import java.io.File
-import java.io.FileOutputStream
-import java.io.FileWriter
-import java.io.IOException
+import java.io.OutputStreamWriter
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -31,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var latTV : TextView
     private lateinit var lonTV : TextView
 
-    private val TIME_INTERVAL = 1*60*1000L
+    private val TIME_INTERVAL = 5*60*1000L
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,9 +69,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-
-
     private fun getCurrentLocation() {
         // checking location permission
         if (ActivityCompat.checkSelfPermission(this,
@@ -99,49 +94,31 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             .addOnFailureListener {
-             //   Toast.makeText(this, "Failed on getting current location", Toast.LENGTH_SHORT).show()
             }
     }
 
     private fun crateAndWriteOnFile(latitude: Double, longitude: Double) {
 
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        val currentDateTime: String = dateFormat.format(Date())
+
+        val text = "$currentDateTime ::: Latitude : $latitude , Longitude : $longitude"
+
+        val FILE_NAME = "example.txt";
 
 
-//        try {
-//            val root = File(Environment.getExternalStorageDirectory(), "Notes")
-//            if (!root.exists()) {
-//                root.mkdirs()
-//            }
-//            val gpxfile = File(root, "MyLocationApp.txt")
-//            val writer = FileWriter(gpxfile)
-//            writer.append("Latitude : $latitude , Longitude : $longitude")
-//            writer.flush()
-//            writer.close()
-//           // Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
-//        } catch (e: IOException) {
-//            e.printStackTrace()
-//        }
-
-        try {
-            val rootPath = Environment.getExternalStorageDirectory()
-                .absolutePath + "/MyFolder/"
-            val root = File(rootPath)
-            if (!root.exists()) {
-                root.mkdirs()
-            }
-            val f = File(rootPath + "mttext.txt")
-            if (f.exists()) {
-                f.delete()
-            }
-            f.createNewFile()
-            val out = FileOutputStream(f)
-            out.flush()
-            out.close()
-        } catch (e: java.lang.Exception) {
-            e.printStackTrace()
-        }
+        val fOut = openFileOutput(
+            FILE_NAME,
+            MODE_APPEND
+        )
+        val osw = OutputStreamWriter(fOut)
+        osw.write(text)
+        osw.appendLine()
+        osw.flush()
+        osw.close()
 
     }
+
 
 
 }
