@@ -40,6 +40,7 @@
                 android:textSize="17sp" />
 
             <TextView
+                android:id="@+id/latitudeTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0.0.0"
@@ -61,6 +62,7 @@
                 android:textSize="17sp" />
 
             <TextView
+                android:id="@+id/longitudeTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0.0.0"
